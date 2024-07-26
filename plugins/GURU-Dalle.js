@@ -1,21 +1,30 @@
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'
+import uploadImage from '../lib/uploadImage.js'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) throw `*This command generates images from text prompts*\n\n*𝙴xample usage*\n*◉ ${usedPrefix + command} Beautiful anime girl*\n*◉ ${usedPrefix + command} Elon Musk in pink output*`;
+  if (!text)
+    throw `*This command generates images from text prompts*\n\n*𝙴xample usage*\n*◉ ${usedPrefix + command} Beautiful anime girl*\n*◉ ${usedPrefix + command} Elon Musk in pink output*`
 
-     
-try {
-    m.reply('*Please wait,STAR is enerating images...*');
+  try {
+    m.reply('*Please wait, generating images...*')
 
-    const endpoint = `https://gurugpt.cyclic.app/dalle?prompt=${encodeURIComponent(text)}`;
-    const endpoint = `https://cute-tan-gorilla-yoke.cyclic.app/imagine?text=${encodeURIComponent(text)}`;
-    const response = await fetch(endpoint);
+    const endpoint = `https://api.gurusensei.workers.dev/dream?prompt=${encodeURIComponent(text)}`
+    const response = await fetch(endpoint)
 
     if (response.ok) {
-@@ -22,5 +22,5 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
+      const imageBuffer = await response.buffer()
+      let imgurl = await uploadImage(imageBuffer)
+      await conn.sendButton(m.chat,'Here is your Result', author, imgurl, [['MENU', `${usedPrefix}menu`]], null, [['WATCH ANIME', `https://www.anime-planet.com/anime/watch-online/`]], m)
+    } else {
+      throw '*Image generation failed*'
+    }
+  } catch {
+    throw '*Oops! Something went wrong while generating images. Please try again later.*'
+  }
+}
 
-handler.help = ['dalle'];
-handler.tags = ['AI'];
-handler.command = ['dalle', 'gen', 'gimg', 'openai2'];
-handler.command = ['dalle', 'gen', 'imagine', 'openai2'];
-export default handler;
+handler.help = ['dalle']
+handler.tags = ['AI']
+handler.command = ['dalle', 'gen', 'imagine', 'openai2']
+export default handler
+

@@ -8,7 +8,7 @@ let handler = async (m, { conn, usedPrefix, command}) => {
     
       let lkr;
       switch (command) {
-        case 'list':
+        case 'list2':
 lkr = "*Get excited, here are your options:*\n\n" +
 "🤖 *" + usedPrefix + "botmenu* - The Bot's secret control panel. What's your command, oh great one?\n\n" +
 "👑 *" + usedPrefix + "ownermenu* - The sacred scroll only for the chosen one. Yep, that's you, Boss!\n\n" +    
@@ -358,7 +358,7 @@ break;
           lkr = `use command ${usedPrefix}nsfw`; // 
           break;
           case 'logomenu':
-          lkr = `use ${usedPrefix}logo to see all options \ngfx cmd upto 12`; // 
+          lkr = `use ${usedPrefix}gfx to see all options \ngfx cmd upto 12`; // 
           break;
         default:
           lkr = `Invalid command. Type ${usedPrefix}list to see available options.`;
